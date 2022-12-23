@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="1.munit-testsuite-testcase-test-suite.xml" />
+	<munit:test name="sumlsValidTestCase" doc:id="a16d05d2-4bdf-45b9-bd78-3e0082823533" description="Test" timeOut="12000">
+		<munit:behavior >
+			<set-payload value='#[%dw 2.0&#10;output application/json&#10;---&#10;{&#10;	"a": 5,&#10;	"b": 5&#10;	&#10;}]' doc:name="Set Payload" doc:id="b1672129-2fa7-459a-9f51-0306134b4c50" />
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to basicCalculator" doc:id="b7308d7c-076a-49b6-9bff-fe7b8bc2e2ef" name="basicCalculator"/>
+		</munit:execution>
+		<munit:validation>
+			<munit-tools:assert-that doc:name="Assert that -. SUM is 10" doc:id="60b4d323-c1e7-4c4f-a73a-bd9b9ec95983" is="#[MunitTools::equalTo(10)]" expression="#[payload.SUM]"/>
+			<logger level="INFO" doc:name="Log sumlsValidTestCase" doc:id="44f32200-b4b4-4401-84b6-1dff5bda9d01" message="#[payload.SUM]"/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="sumlsPositiveTestCase" doc:id="de07f3c4-4dd8-4e93-8f77-d9497c7be10e" timeOut="10000">
+		<munit:behavior >
+			<set-payload value='#[%dw 2.0&#10;output application/json&#10;---&#10;{&#10;	"a": 5,&#10;	"b": 5&#10;	&#10;}]' doc:name="Set Payload" doc:id="1a86210d-68ae-4752-997b-266fa59f124c" />
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to basicCalculator" doc:id="5e9b7e35-ba8d-45e9-9029-27f664b414a4" name="basicCalculator"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that -&gt; SUM is positive" doc:id="dc5d1c14-a0d7-4054-b8df-f9e5d1a6080d" is="#[MunitTools::greaterThanOrEqualTo(0)]" expression="#[payload.SUM]"/>
+			<logger level="INFO" doc:name="Log sumlsPositiveTestCase" doc:id="3dc0503a-2784-4848-bd41-64a8445874a7" message="#[payload.SUM]"/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="sumlsNegativeTestCase" doc:id="0c86a14a-1045-46f7-8eb9-15904e73d1a4" timeOut="9000">
+		<munit:behavior >
+			<set-payload value='#[%dw 2.0&#10;output application/json&#10;---&#10;{&#10;	"a": 5,&#10;	"b": -8&#10;	&#10;}]' doc:name="Set Payload" doc:id="5844111c-a768-414b-8c11-88c66282414a" />
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to basicCalculator" doc:id="ed1eeec8-bc1b-4c15-b553-66484bceefeb" name="basicCalculator" />
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that -&gt; SUM is negative" doc:id="0e7cba6d-28ce-4718-b9a5-df5b3fcdb692" expression="#[payload.SUM]" is="#[MunitTools::lessThan(0)]" />
+			<logger level="INFO" doc:name="Log sumlsNegativeTestCase" doc:id="3b2b9ba2-1d1c-47f9-ad4c-2773c2735542" message="#[payload.SUM]" />
+		</munit:validation>
+	</munit:test>
+
+
+</mule>
