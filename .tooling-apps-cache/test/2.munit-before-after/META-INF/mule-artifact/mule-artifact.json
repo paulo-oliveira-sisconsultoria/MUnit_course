@@ -1,0 +1,30 @@
+{
+  "configs": [
+    "global.xml",
+    "2.munit-before-after-test-suite.xml",
+    "2.munit-before-after.xml"
+  ],
+  "secureProperties": [],
+  "redeploymentEnabled": true,
+  "name": "com.mycompany:2.munit-before-after:1.0.0-SNAPSHOT",
+  "minMuleVersion": "4.4.0",
+  "requiredProduct": "MULE",
+  "classLoaderModelLoaderDescriptor": {
+    "id": "mule",
+    "attributes": {
+      "exportedResources": [
+        "2.munit-before-after.xml",
+        "application-types.xml",
+        "global.xml",
+        "log4j2.xml",
+        "log4j2-test.xml"
+      ],
+      "includeTestDependencies": "true",
+      "exportedPackages": []
+    }
+  },
+  "bundleDescriptorLoader": {
+    "id": "mule",
+    "attributes": {}
+  }
+}
